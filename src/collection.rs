@@ -1,0 +1,42 @@
+use bytemuck::{Pod, Zeroable};
+use pinocchio::pubkey::Pubkey;
+
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Pod, Zeroable)]
+#[repr(C)]
+pub struct Collection {
+    pub verified: u8,
+    pub key: Pubkey,
+    pub present: u8,
+    pub _padding: [u8; 7],
+}
+
+impl Collection {
+    pub const NONE: u8 = 0;
+    pub const SOME: u8 = 1;
+
+    pub fn none() -> Self {
+        Self {
+            verified: 0,
+            key: Pubkey::default(),
+            present: Self::NONE,
+            _padding: [0; 7],
+        }
+    }
+
+    pub fn some(verified: u8, key: Pubkey) -> Self {
+        Self {
+            verified,
+            key,
+            present: Self::SOME,
+            _padding: [0; 7],
+        }
+    }
+
+    pub fn is_some(&self) -> bool {
+        self.present == Self::SOME
+    }
+
+    pub fn is_none(&self) -> bool {
+        self.present == Self::NONE
+    }
+}
