@@ -25,7 +25,7 @@ checksum = "5b971851087bc3699b001954ad02389d50c41405ece3548cbcafc88b3e20017a"
 
 [[package]]
 name = "pinocchio-mpl-token-metadata"
-version = "5.1.1"
+version = "1.0.0"
 dependencies = [
  "pinocchio",
  "pinocchio-pubkey",

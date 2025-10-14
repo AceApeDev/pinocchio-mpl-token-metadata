@@ -2,7 +2,7 @@
 name = "pinocchio-mpl-token-metadata"
 description = "Metaplex Token Metadata SDK for Pinocchio"
 edition = "2021"
-version = "5.1.1"
+version = "1.0.0"
 license = "MIT"
 readme = "./README.md"
 
