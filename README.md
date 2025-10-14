@@ -12,25 +12,30 @@ A minimal, zero-copy SDK for Metaplex Token Metadata program designed for Solana
 ## Usage
 
 ```rust
-use pinocchio_mpl_token_metadata::{CreateMetadataAccountV3, MPL_TOKEN_METADATA_ID};
+use pinocchio_mpl_token_metadata::{CreateMetadataAccountV3, CreateMetadataAccountV3Args};
 
-CreateMetadataAccountV3::new(
-    metadata_info,
-    mint_info,
-    mint_authority_info,
-    payer_info,
-    update_authority_info,
+CreateMetadataAccountV3 {
+    metadata: metadata_info,
+    mint: mint_info,
+    mint_authority: mint_authority_info,
+    payer: payer_info,
+    update_authority: update_authority_info,
     system_program,
-    "Token Name",
-    "SYMBOL",
-    "https://example.com/metadata.json",
-)
+    args: CreateMetadataAccountV3Args {
+        name: "Token Name",
+        symbol: "SYMBOL",
+        uri: "https://example.com/metadata.json",
+        seller_fee_basis_points: 0,
+        is_mutable: true,
+    },
+}
 .invoke_signed(&[signer])?;
 ```
 
 ## Supported Instructions
 
 Currently supports:
+
 - ✅ `CreateMetadataAccountV3`
 
 Need more instructions? PRs are welcome!
