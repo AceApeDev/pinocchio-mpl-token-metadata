@@ -1,12 +1,12 @@
 //! CPI wrapper for Metaplex CreateMetadataAccountV3 instruction
 
+use crate::{CreateMetadataAccountV3Args, MPL_TOKEN_METADATA_ID};
 use pinocchio::{
-    ProgramResult,
     account_info::AccountInfo,
-    instruction::{AccountMeta, Instruction, Signer},
     cpi::invoke_signed,
+    instruction::{AccountMeta, Instruction, Signer},
+    ProgramResult,
 };
-use crate::{MPL_TOKEN_METADATA_ID, CreateMetadataAccountV3Args};
 
 /// Builder for CreateMetadataAccountV3 CPI
 pub struct CreateMetadataAccountV3<'a> {
@@ -16,42 +16,10 @@ pub struct CreateMetadataAccountV3<'a> {
     pub payer: &'a AccountInfo,
     pub update_authority: &'a AccountInfo,
     pub system_program: &'a AccountInfo,
-
     pub args: CreateMetadataAccountV3Args<'a>,
 }
 
 impl<'a> CreateMetadataAccountV3<'a> {
-    /// Create a new instance with simple parameters
-    #[inline(always)]
-    pub fn new(
-        metadata: &'a AccountInfo,
-        mint: &'a AccountInfo,
-        mint_authority: &'a AccountInfo,
-        payer: &'a AccountInfo,
-        update_authority: &'a AccountInfo,
-        system_program: &'a AccountInfo,
-        name: &'a str,
-        symbol: &'a str,
-        uri: &'a str,
-    ) -> Self {
-        Self {
-            metadata,
-            mint,
-            mint_authority,
-            payer,
-            update_authority,
-            system_program,
-            args: CreateMetadataAccountV3Args::new(name, symbol, uri),
-        }
-    }
-
-    /// Set custom args
-    #[inline(always)]
-    pub fn with_args(mut self, args: CreateMetadataAccountV3Args<'a>) -> Self {
-        self.args = args;
-        self
-    }
-
     /// Invoke the CPI without signers
     #[inline(always)]
     pub fn invoke(&self) -> ProgramResult {
@@ -84,7 +52,14 @@ impl<'a> CreateMetadataAccountV3<'a> {
         // Invoke CPI
         invoke_signed(
             &instruction,
-            &[self.metadata, self.mint, self.mint_authority, self.payer, self.update_authority, self.system_program],
+            &[
+                self.metadata,
+                self.mint,
+                self.mint_authority,
+                self.payer,
+                self.update_authority,
+                self.system_program,
+            ],
             signers,
         )
     }
